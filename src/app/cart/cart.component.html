@@ -1,0 +1,17 @@
+<h3>Cart:</h3>
+
+<p *ngIf="itemsInCart.length === 0; else cartContents">
+  Your cart is empty
+</p>
+
+<ng-template #cartContents>
+  <ul>
+    <li *ngFor="let cartItem of itemsInCart">
+      <p>
+        {{ cartItem.product.name }} -- {{ cartItem.product.price | currency }} -- x{{ cartItem.quantity }}
+    
+        <button (click)="removeFromCart(cartItem)">Remove</button>
+      </p>
+    </li>
+  </ul>
+</ng-template>
