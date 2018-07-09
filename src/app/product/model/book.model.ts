@@ -1,9 +1,6 @@
 import { Product } from './product.model';
 
 export class Book implements Product {
-    quantity?: number;
-    location?: string;
-
     private publishingDate: Date;
 
     constructor(
@@ -11,7 +8,9 @@ export class Book implements Product {
         public name: string,
         public date: string,
         public publisher: string,
-        public price: number
+        public price: number,
+        public quantity?: number,
+        public location?: string
     ) {
         this.publishingDate = new Date(date);
     }
