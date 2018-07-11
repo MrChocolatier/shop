@@ -1,31 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { Category } from '../../model/category.enum';
 import { Product } from '../../model/product.model';
-import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+  // For OnPush to work we need to recreate product each time its properties (e.g. availableQuantity) are updated
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
 
-  name: string;
-  description: string;
-  price: number;
-  category: Category;
-  isAvaliable: Boolean;
+  @Output() addToCart = new EventEmitter<Product>();
 
-  constructor(private cartService: CartService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.name = this.product.name;
-    this.price = this.product.price;
-  }
+  ngOnInit() {}
 
   onAddToCart() {
-    this.cartService.addToCart(this.product);
+    this.addToCart.emit(this.product);
   }
 }

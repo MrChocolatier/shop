@@ -10,3 +10,12 @@
     - Add CartService, add methods to put item in cart and remove item from cart
     - Add CartItem model
     - Display cart contents in app component
+
+## Task 2
+
+- Add Cart, Orders, Core and Shared modules
+- Add CartList component
+- Change CartService and ProductService to expose Subject
+    - Add subscriptions and handlers for Cart and Product services to CartList and ProductList components
+    - Display available quantity of items and total quantity and price of items in cart
+- Add Highlight directive

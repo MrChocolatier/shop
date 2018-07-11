@@ -1,16 +1,14 @@
-import { Product } from './../product/model/product.model';
+import { Subject } from 'rxjs';
+
+import { Product } from '../../product/model/product.model';
 import { CartItem } from '../model/cart-item.model';
 
 export class CartService {
-  private cartContents: CartItem[];
+  cartItems$ = new Subject();
 
-  constructor() {
-    this.cartContents = [];
-  }
+  private cartContents: CartItem[] = [];
 
-  getCartContents(): CartItem[] {
-    return this.cartContents;
-  }
+  constructor() {}
 
   // Add to cart 1 item
   addToCart(product: Product) {
@@ -21,6 +19,8 @@ export class CartService {
     } else {
       this.cartContents[cartIndex].quantity += 1;
     }
+
+    this.cartItems$.next(this.cartContents);
   }
 
   // Remove from cart 1 item
@@ -36,6 +36,8 @@ export class CartService {
     } else {
       this.cartContents.splice(cartIndex, 1);
     }
+
+    this.cartItems$.next(this.cartContents);
   }
 
   private getItemIndex(product: Product): number {

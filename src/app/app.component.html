@@ -4,15 +4,10 @@
 
 <div class="page-content">
   <section>
-      <h3>Available books:</h3>
-      <ul>
-        <li *ngFor="let book of books">
-          <app-product [product]="book"></app-product>
-        </li>
-      </ul>
-    </section>
-    
-    <aside>
-      <app-cart></app-cart>
-    </aside>
+    <app-product-list></app-product-list>
+  </section>
+  
+  <aside>
+    <app-cart-list></app-cart-list>
+  </aside>
 </div>

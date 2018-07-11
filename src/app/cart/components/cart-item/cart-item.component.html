@@ -1,0 +1,5 @@
+<p>
+  {{ cartItem.product.name }} -- {{ cartItem.product.price | currency }} -- x{{ cartItem.quantity }}
+
+  <button (click)="onRemoveFromCart()">Remove</button>
+</p>

@@ -1,0 +1,7 @@
+<h3>Available books:</h3>
+
+<ul>
+  <li *ngFor="let book of books">
+    <app-product [product]="book" (addToCart)="onAddToCart($event)"></app-product>
+  </li>
+</ul>

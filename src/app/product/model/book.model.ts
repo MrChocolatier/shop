@@ -1,27 +1,20 @@
 import { Product } from './product.model';
 
 export class Book implements Product {
-    name: string;
-    price: number;
-    quantity?: number;
-    location?: string;
-
-    author: string;
-    publisher: string;
+    public availableQuantity?: number;
 
     private publishingDate: Date;
 
     constructor(
-        author: string,
-        title: string,
-        date: string,
-        publisher: string,
-        price: number
+        public author: string,
+        public name: string,
+        public date: string,
+        public publisher: string,
+        public price: number,
+        public quantity?: number,
+        public location?: string
     ) {
-        this.author = author;
-        this.name = title;
         this.publishingDate = new Date(date);
-        this.publisher = publisher;
-        this.price = price;
+        this.availableQuantity = quantity;
     }
 }
