@@ -17,8 +17,7 @@ import { CartService } from '../../../cart/services/cart.service';
 export class ProductListComponent implements OnInit, OnDestroy {
   books: Book[];
 
-  private bookSub: Subscription;
-  private cartSub: Subscription;
+  private sub: Subscription;
 
   constructor(
     private productService: ProductsService,
@@ -26,32 +25,35 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.bookSub = this.productService.books$.subscribe((books: Book[]) => this.books = books);
-    this.cartSub = this.cartService.cartItems$.subscribe((items: CartItem[]) => {
-      if (items.length === 0) {
+    this.sub = this.productService.books$.subscribe((books: Book[]) => this.books = books);
+    this.sub.add(
+      this.cartService.cartItems$.subscribe((items: CartItem[]) => {
         // Restore quantities if cart is empty
-        this.books.forEach(book => {
-          book.availableQuantity = book.quantity;
+        this.books.forEach((book: Book) => {
+          const isInCart = items.length > 0 && items.find(item => item.product.name === book.name);
+
+          if (!isInCart) {
+            book.availableQuantity = book.quantity;
+          }
         });
-      }
 
-      items.forEach(cartItem => {
-        const bookIndex = this.books.findIndex(book => book.name === cartItem.product.name);
+        items.forEach(cartItem => {
+          const bookIndex = this.books.findIndex(book => book.name === cartItem.product.name);
 
-        // Update available products quantity
-        if (bookIndex !== -1) {
-          const book = this.books[bookIndex];
-          book.availableQuantity = book.quantity - cartItem.quantity;
-        }
-      });
-    });
+          // Update available products quantity
+          if (bookIndex !== -1) {
+            const book = this.books[bookIndex];
+            book.availableQuantity = book.quantity - cartItem.quantity;
+          }
+        });
+      })
+    );
 
     this.productService.getProducts();
   }
 
   ngOnDestroy() {
-    this.bookSub.unsubscribe();
-    this.cartSub.unsubscribe();
+    this.sub.unsubscribe();
   }
 
   onAddToCart(product: Product) {

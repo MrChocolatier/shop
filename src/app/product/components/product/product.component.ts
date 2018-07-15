@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { Category } from '../../model/category.enum';
 import { Product } from '../../model/product.model';
@@ -7,8 +7,6 @@ import { Product } from '../../model/product.model';
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
-  // For OnPush to work we need to recreate product each time its properties (e.g. availableQuantity) are updated
-  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
