@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../model/cart-item.model';
+import { Cart } from '../../model/cart.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -20,9 +21,10 @@ export class CartListComponent implements OnInit, OnDestroy {
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
-    this.itemsSub = this.cartService.cartItems$.subscribe((items: CartItem[]) => {
-      this.itemsInCart = items;
-      this.calculateCartTotal();
+    this.itemsSub = this.cartService.cart$.subscribe((cart: Cart) => {
+      this.itemsInCart = cart.items;
+      this.totalPrice = cart.totalPrice;
+      this.totalQuantity = cart.totalQuantity;
     });
   }
 
@@ -34,12 +36,7 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.cartService.removeFromCart(item.product);
   }
 
-  private calculateCartTotal() {
-    this.totalPrice = 0;
-    this.totalQuantity = 0;
-    this.itemsInCart.forEach((item) => {
-      this.totalPrice += item.product.price * item.quantity;
-      this.totalQuantity += item.quantity;
-    });
+  clearCart() {
+    this.cartService.clearCart();
   }
 }

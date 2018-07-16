@@ -1,0 +1,13 @@
+<div>
+  <h3>Demo component</h3>
+
+  <p appClicker>Config </p>
+  <pre>
+    {{ config | json }}
+  </pre>
+
+  <p>App Info:</p>
+  <pre>
+    {{ appInfo ? (appInfo | json) : 'No info' }}
+  </pre>
+</div>

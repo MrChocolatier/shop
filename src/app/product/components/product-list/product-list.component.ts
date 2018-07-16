@@ -8,6 +8,7 @@ import { CartItem } from '../../../cart/model/cart-item.model';
 
 import { ProductsService } from '../../services/products.service';
 import { CartService } from '../../../cart/services/cart.service';
+import { Cart } from '../../../cart/model/cart.model';
 
 @Component({
   selector: 'app-product-list',
@@ -27,17 +28,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.productService.books$.subscribe((books: Book[]) => this.books = books);
     this.sub.add(
-      this.cartService.cartItems$.subscribe((items: CartItem[]) => {
+      this.cartService.cart$.subscribe((cart: Cart) => {
         // Restore quantities if cart is empty
         this.books.forEach((book: Book) => {
-          const isInCart = items.length > 0 && items.find(item => item.product.name === book.name);
+          const isInCart = cart.items.length > 0 && cart.items.find(item => item.product.name === book.name);
 
           if (!isInCart) {
             book.availableQuantity = book.quantity;
           }
         });
 
-        items.forEach(cartItem => {
+        cart.items.forEach(cartItem => {
           const bookIndex = this.books.findIndex(book => book.name === cartItem.product.name);
 
           // Update available products quantity
