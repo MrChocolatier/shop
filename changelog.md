@@ -20,10 +20,15 @@
     - Display available quantity of items and total quantity and price of items in cart
 - Add Highlight directive
 
-
 ## Task 3
 
 - Update CartService to keep track of total number of items in cart and total price
 - Create ConfigOptions, Constants, Generator and LocalStorage services in Core module
 - Create Demo component to use this services
 - Create Clicker directive 
+
+## Task 4
+
+- Use 'titlecase' pipe for products and cart items names, 'uppercase' for app title
+- Modify ProductService to return promise and display product list through 'async' pipe
+- Create 'OrderBy' pipe and add UI for sorting cart contents

@@ -5,4 +5,9 @@
 
 .page-content aside {
     margin-left: 2em;
+    flex: 1;
+}
+
+.page-content section {
+    flex: 1;
 }

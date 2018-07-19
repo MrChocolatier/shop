@@ -1,0 +1,13 @@
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-item__name {
+    flex: 1;
+}
+
+.cart-item__quantity {
+    display: inline-block;
+    margin: 0 1em;
+}

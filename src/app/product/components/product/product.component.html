@@ -1,5 +1,7 @@
-<p>
-  {{ product.name }} -- x{{ product.availableQuantity }} -- {{ product.price | currency }}
+<p class="product">
+  <span class="product__name">{{ product.name | titlecase }}</span>
+  <span class="product__quantity">x{{ product.availableQuantity }}</span>
+  <span class="product__price">{{ product.price | currency }}</span>
 
   <button (click)="onAddToCart()" 
     [disabled]="!product.availableQuantity">Add to cart</button>

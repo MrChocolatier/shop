@@ -11,14 +11,7 @@ const bookData = [
 ];
 
 export class ProductsService {
-  books$ = new Subject();
-  // books = new Observable((observer) => {
-  //   const books = bookData.map(book => {
-  //     return new Book(book.author, book.title, book.date, book.publisher, book.price, book.quantity);
-  //   });
-
-  //   observer.next(books);
-  // });
+  books$: Subject<Book[]> = new Subject();
 
   constructor() {}
 
@@ -28,5 +21,17 @@ export class ProductsService {
     });
 
     this.books$.next(books);
+  }
+
+  getProductsPromise(): Promise<any> {
+    const books = bookData.map(book => {
+      return new Book(book.author, book.title, book.date, book.publisher, book.price, book.quantity);
+    });
+
+    const promise = new Promise((resolve, reject) => {
+      resolve(books);
+    });
+
+    return promise;
   }
 }

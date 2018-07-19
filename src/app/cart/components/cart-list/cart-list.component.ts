@@ -3,8 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
-import { CartItem } from '../../model/cart-item.model';
 import { Cart } from '../../model/cart.model';
+import { Product } from '../../../product/model/product.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -12,9 +12,13 @@ import { Cart } from '../../model/cart.model';
   styleUrls: ['./cart-list.component.css']
 })
 export class CartListComponent implements OnInit, OnDestroy {
-  itemsInCart: CartItem[] = [];
+  itemsInCart: Product[] = [];
   totalPrice: number;
   totalQuantity: number;
+
+  sortBy = 'price';
+  sortOptions = ['price', 'quantity', 'name'];
+  sortDesc = true;
 
   private itemsSub: Subscription;
 
@@ -32,8 +36,8 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.itemsSub.unsubscribe();
   }
 
-  removeFromCart(item: CartItem) {
-    this.cartService.removeFromCart(item.product);
+  removeFromCart(item: Product) {
+    this.cartService.removeFromCart(item);
   }
 
   clearCart() {

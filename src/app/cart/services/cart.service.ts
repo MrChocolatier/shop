@@ -1,13 +1,12 @@
 import { Subject } from 'rxjs';
 
 import { Product } from '../../product/model/product.model';
-import { CartItem } from '../model/cart-item.model';
 import { Cart } from '../model/cart.model';
 
 export class CartService {
   cart$ = new Subject();
 
-  private cartItems: CartItem[] = [];
+  private cartItems: Product[] = [];
   private totalQuantity = 0;
   private totalPrice = 0;
 
@@ -18,7 +17,7 @@ export class CartService {
     const cartIndex = this.getItemIndex(product);
 
     if (cartIndex === -1) {
-      this.cartItems.push(new CartItem(product, quantity));
+      this.cartItems.push({...product, quantity});
     } else {
       this.cartItems[cartIndex].quantity += quantity;
     }
@@ -54,7 +53,7 @@ export class CartService {
   }
 
   private getItemIndex(product: Product): number {
-    return this.cartItems.findIndex((cartItem) => cartItem.product.name === product.name);
+    return this.cartItems.findIndex((cartItem) => cartItem.name === product.name);
   }
 
   private calculateTotals() {
@@ -63,7 +62,7 @@ export class CartService {
     }, 0);
 
     this.totalPrice = this.cartItems.reduce((value, item) => {
-      return value + (item.quantity * item.product.price);
+      return value + (item.quantity * item.price);
     }, 0);
   }
 }

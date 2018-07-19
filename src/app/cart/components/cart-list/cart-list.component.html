@@ -5,10 +5,23 @@
 </p>
 
 <ng-template #cartContents>
+  <p>
+    Sort by:
+    <select [(ngModel)]="sortBy">
+      <option *ngFor="let option of sortOptions" 
+        [value]="option">{{ option | titlecase }}</option>
+    </select>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="sortDesc">
+      Descending
+    </label>
+  </p>
+
   <ul>
-    <li *ngFor="let cartItem of itemsInCart">
+    <li *ngFor="let cartItem of (itemsInCart | orderBy : sortBy : sortDesc)">
       <app-cart-item 
-        [cartItem]="cartItem" 
+        [cartItem]="cartItem"
         (removeFromCart)="removeFromCart($event)" 
         appHighlight>
       </app-cart-item>
